@@ -7,6 +7,8 @@ Created on Jul 19, 2012
 import pygame, sys
 from pygame.locals import *
 from character import *
+from tile import *
+from map import *
 
 pygame.init()
 fpsClock = pygame.time.Clock()
@@ -17,13 +19,14 @@ window = pygame.display.set_mode((windowWidth, windowHeight))
 pygame.display.set_caption(windowTitle)
 pygame.key.set_repeat(1, 1)
 
-player = Character('Player', 100, 100, '../img/toad.png')
+player = Character('Player', (100,100), '../img/pinkblob.png')
+thisMap = Map('../maps/walled_field.txt')
 
 # Game loop
 while True:
-    window.fill(pygame.Color(255, 255, 255))
+    thisMap.draw(window)
     
-    window.blit(player.image, player.rect)
+    window.blit(player.image, player.pos)
     
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -32,6 +35,8 @@ while True:
         # elif event.type === MOUSEMOTION:
         # elif event.type === MOUSEBUTTONUP:
         elif event.type == KEYDOWN:
+            player.x = player.pos[0]
+            player.y = player.pos[1]
             if (event.key == K_LEFT) and (player.x - player.rect.width/2 > 0):
                 player.move('left')
             elif (event.key == K_RIGHT) and (player.x + player.rect.width/2 < windowWidth):
