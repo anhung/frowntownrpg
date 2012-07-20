@@ -23,6 +23,10 @@ player = Player('Player', (0,0), '../img/pinkblob.png')
 blue = Character('Blue Blob', (8*64, 64), '../img/blueblob.png')
 thisMap = Map('../maps/mixed.txt')
 
+pygame.mixer.init()
+pygame.mixer.music.load('../music/dirediredocks.mp3')
+pygame.mixer.music.play()
+
 # Game loop
 while True:
     thisMap.draw(window)
@@ -47,6 +51,10 @@ while True:
                 player.move('up')
             elif (event.key == K_DOWN) and (player.y + player.speed < windowHeight):
                 player.move('down')
+            elif (event.key == K_s):
+                pygame.mixer.music.pause()
+            elif (event.key == K_a):
+                pygame.mixer.music.unpause()
             # elif event.key === K_a
 
     # collisions
